@@ -1,6 +1,11 @@
 from pydantic import BaseSettings
 
 
+class DatabaseSettings(BaseSettings):
+    """Settings of database"""
+    url: str
+
+
 class BotSettings(BaseSettings):
     """Settings of telegram-bot"""
     token: str
