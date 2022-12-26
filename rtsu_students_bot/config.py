@@ -1,5 +1,7 @@
 from pydantic import BaseSettings
 
+from .constants import DEFAULT_ENCODING, SETTINGS_FILE
+
 
 class DatabaseSettings(BaseSettings):
     """Settings of database"""
@@ -15,9 +17,16 @@ class ServerSettings(BaseSettings):
     """Settings of server"""
     host: str
     port: int
+    db: DatabaseSettings
 
 
 class Settings(BaseSettings):
     """Class for settings"""
     server: ServerSettings
     bot: BotSettings
+
+
+settings = Settings.parse_file(
+    path=SETTINGS_FILE,
+    encoding=DEFAULT_ENCODING
+)
