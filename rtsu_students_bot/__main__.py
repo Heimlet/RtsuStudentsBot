@@ -2,16 +2,8 @@
 
 import typer
 
-from .constants import DEFAULT_ENCODING, SETTINGS_FILE
-from .config import Settings
-
 app = typer.Typer()
 run_command = typer.Typer()
-
-settings = Settings.parse_file(
-    path=SETTINGS_FILE,
-    encoding=DEFAULT_ENCODING
-)
 
 
 @run_command.command("server", help="Runs the server.")
