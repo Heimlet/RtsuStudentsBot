@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from ..settings import Settings
+from ..config import Settings
 
 
 def app_factory(settings: Settings):

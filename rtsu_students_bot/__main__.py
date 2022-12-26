@@ -3,7 +3,7 @@
 import typer
 
 from .constants import DEFAULT_ENCODING, SETTINGS_FILE
-from .settings import Settings
+from .config import Settings
 
 app = typer.Typer()
 run_command = typer.Typer()
