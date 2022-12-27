@@ -51,8 +51,14 @@ class BaseModelFunctionality:
         return obj, True
 
     @classmethod
-    async def delete(cls):
-        raise NotImplementedError
+    async def delete(cls, session: AsyncSession, object_id: int) -> bool:
+        """Deletes object by ID"""
+        try:
+            await session.delete(object_id)
+        except Exception as e:
+            logging.error(f"Deleting error, {e}")
+            return False
+        return True
 
     @classmethod
     async def update(cls):
