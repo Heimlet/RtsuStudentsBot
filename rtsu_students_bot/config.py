@@ -20,10 +20,16 @@ class ServerSettings(BaseSettings):
     db: DatabaseSettings
 
 
+class Logging(BaseSettings):
+    format: str
+    debug: bool
+
+
 class Settings(BaseSettings):
     """Class for settings"""
     server: ServerSettings
     bot: BotSettings
+    logging: Logging
 
 
 settings = Settings.parse_file(
