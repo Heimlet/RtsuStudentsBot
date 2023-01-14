@@ -2,6 +2,10 @@
 
 import typer
 
+import uvicorn
+
+from .config import settings
+
 app = typer.Typer()
 run_command = typer.Typer()
 
@@ -9,7 +13,17 @@ run_command = typer.Typer()
 @run_command.command("server", help="Runs the server.")
 def run_server():
     """Starts the server."""
-    pass
+
+    logging_format = uvicorn.config.LOGGING_CONFIG
+
+    logging_format["formatters"]["access"]["fmt"] = settings.logging.format
+    logging_format["formatters"]["default"]["fmt"] = settings.logging.format
+
+    uvicorn.run(
+        app="rtsu_students_bot.server.app:app",
+        host=settings.server.host,
+        port=settings.server.port,
+    )
 
 
 @run_command.command("bot", help="Runs the bot")
