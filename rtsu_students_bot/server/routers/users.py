@@ -10,7 +10,7 @@ from ..models import User
 
 from .dependencies import session_factory
 
-router = APIRouter(prefix='users')
+router = APIRouter(prefix='/users')
 
 
 @router.get(
