@@ -13,7 +13,8 @@ class UserRole(PythonEnum):
 
 class User(Base):
     """Users table"""
-    __table__ = 'users'
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True)
     telegram_id = Column(Integer)
     login = Column(String)
     password = Column(String)
