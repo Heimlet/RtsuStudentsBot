@@ -1,0 +1,6 @@
+class NotAuthorizedError(Exception):
+    ...
+
+
+class RtsuContentTypeError(Exception):
+    ...
