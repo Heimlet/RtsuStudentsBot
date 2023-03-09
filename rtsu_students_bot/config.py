@@ -13,13 +13,6 @@ class BotSettings(BaseSettings):
     token: str
 
 
-class ServerSettings(BaseSettings):
-    """Settings of server"""
-    host: str
-    port: int
-    db: DatabaseSettings
-
-
 class Logging(BaseSettings):
     format: str
     debug: bool
@@ -27,7 +20,6 @@ class Logging(BaseSettings):
 
 class Settings(BaseSettings):
     """Class for settings"""
-    server: ServerSettings
     bot: BotSettings
     logging: Logging
 
