@@ -5,7 +5,7 @@ from typing import Optional, Union, Dict, TypeVar, Type, List, Self
 from pydantic import BaseModel, parse_obj_as
 
 from .exceptions import NotAuthorizedError, RtsuContentTypeError
-from .schemas import AuthSchema
+from .schemas import AuthSchema, Profile, Subject, AcademicYear
 
 RTSU_API_BASE_URL = "https://mobile.rtsu.tj/api/v1"
 P = TypeVar("P", bound=BaseModel)
@@ -95,6 +95,45 @@ class RTSUApi:
         self._api_token = response.token
 
         return response
+
+    async def get_profile(self) -> Profile:
+        """
+        Returns profile of RTSU student
+        :return: `Profile`-response
+        """
+
+        return await self._make_request(
+            "GET",
+            "student/profile",
+            Profile,
+            auth_required=True,
+        )
+
+    async def get_academic_years(self) -> List[AcademicYear]:
+        """
+        Returns `List` with `AcademicYear` objects
+        :return:
+        """
+
+        return await self._make_request(
+            "GET",
+            "student/academic_years",
+            List[AcademicYear],
+            auth_required=True,
+        )
+
+    async def get_academic_year_subjects(self, year_id: int) -> List[Subject]:
+        """
+        Returns `List` with `Subjects` of some year
+        :return:
+        """
+
+        return await self._make_request(
+            "GET",
+            f"student/grades/{year_id}",
+            List[Subject],
+            auth_required=True,
+        )
 
     async def __aenter__(self) -> Self:
         return self
