@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "rtsustudentsbot"
+version = "0.1.0"
+description = ""
+authors = ["Ilyas Kalandar <ilyas_kalandar@outlook.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+typer = "^0.7.0"
+pydantic = "^1.10.6"
+aiogram = "^2.25.1"
+pytest-asyncio = "^0.20.3"
+sqlalchemy = "^2.0.5.post1"
+
+
+[tool.poetry.group.dev.dependencies]
+httpx = "^0.23.3"
+pytest = "^7.2.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
