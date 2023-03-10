@@ -22,6 +22,7 @@ class Settings(BaseSettings):
     """Class for settings"""
     bot: BotSettings
     logging: Logging
+    db: DatabaseSettings
 
 
 settings = Settings.parse_file(
