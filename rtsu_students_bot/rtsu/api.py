@@ -4,7 +4,7 @@ from typing import Optional, Union, Dict, TypeVar, Type, List, Self
 
 from pydantic import BaseModel, parse_obj_as
 
-from .exceptions import NotAuthorizedError, RtsuContentTypeError
+from .exceptions import NotAuthorizedError, RtsuContentTypeError, ServerError, AuthError
 from .schemas import AuthSchema, Profile, Subject, AcademicYear
 
 RTSU_API_BASE_URL = "https://mobile.rtsu.tj/api/v1"
@@ -65,6 +65,12 @@ class RTSUApi:
             ssl=False,
         )
 
+        if response.status != 200:
+            details = await response.text()
+            raise ServerError(
+                f"Server returned {response.status}, details: {details}"
+            )
+
         try:
             deserialized_data = await response.json()
         except ContentTypeError as e:
@@ -82,15 +88,18 @@ class RTSUApi:
         :return: RTSU token on success
         """
 
-        response: AuthSchema = await self._make_request(
-            "POST",
-            "auth",
-            AuthSchema,
-            params={
-                "login": login,
-                "password": password,
-            }
-        )
+        try:
+            response: AuthSchema = await self._make_request(
+                "POST",
+                "auth",
+                AuthSchema,
+                params={
+                    "login": login,
+                    "password": password,
+                }
+            )
+        except ServerError:
+            raise AuthError("Auth error, check login and password.")
 
         self._api_token = response.token
 
