@@ -1,0 +1,13 @@
+from sqlalchemy import Integer, Column, String, Boolean
+
+from .base import Base
+
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+    full_name = Column(String(length=255), nullable=True)
+    token = Column(String(length=600), nullable=True)
+    is_authorized = Column(Boolean, default=False)
+    telegram_id = Column(Integer)
