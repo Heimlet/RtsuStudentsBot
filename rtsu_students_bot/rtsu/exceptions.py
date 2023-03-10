@@ -1,6 +1,20 @@
-class NotAuthorizedError(Exception):
+class RtsuError(Exception):
+    def __init__(self, message: str):
+        self.message = message
+        super().__init__()
+
+
+class NotAuthorizedError(RtsuError):
     ...
 
 
-class RtsuContentTypeError(Exception):
+class RtsuContentTypeError(RtsuError):
+    ...
+
+
+class ServerError(RtsuError):
+    ...
+
+
+class AuthError(RtsuError):
     ...
