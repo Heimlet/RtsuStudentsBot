@@ -3,9 +3,9 @@ from aiogram import Bot, Dispatcher
 from rtsu_students_bot.config import settings
 
 
-def dispatcher_factory() -> Dispatcher:
+def get_app() -> Dispatcher:
     """
-    Builds & returns `Bot` with `Dispatcher`
+    Initializes & returns `Dispatcher`
     """
 
     bot = Bot(settings.bot.token)
