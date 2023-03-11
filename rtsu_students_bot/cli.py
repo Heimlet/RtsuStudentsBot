@@ -1,7 +1,7 @@
 from aiogram import executor
 from typer import Typer, Argument
 
-from .bot import dispatcher_factory
+from .bot import get_app
 
 typer_app = Typer()
 
@@ -18,7 +18,7 @@ def start(
     """
 
     # Build bot
-    dp = dispatcher_factory()
+    dp = get_app()
 
     if use_webhook:
         raise NotImplementedError
