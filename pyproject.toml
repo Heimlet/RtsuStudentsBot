@@ -12,6 +12,7 @@ pydantic = "^1.10.6"
 aiogram = "^2.25.1"
 pytest-asyncio = "^0.20.3"
 sqlalchemy = "^2.0.5.post1"
+aiosqlite = "^0.18.0"
 
 
 [tool.poetry.group.dev.dependencies]
