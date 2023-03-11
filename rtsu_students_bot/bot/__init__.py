@@ -1,1 +1,1 @@
-from .app import dispatcher_factory
+from .app import get_app
