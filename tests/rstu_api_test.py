@@ -3,12 +3,9 @@ import pytest_asyncio
 
 from rtsu_students_bot.rtsu import RTSUApi
 
-pytest_plugins = ('pytest_asyncio',)
+from .config import settings
 
-TEST_DATA = {
-    "login": "your login",
-    "password": "your pass",
-}
+pytest_plugins = ('pytest_asyncio',)
 
 
 @pytest_asyncio.fixture()
@@ -30,9 +27,12 @@ async def test_rtsu_login(rtsu_client: RTSUApi):
     :return:
     """
 
-    resp = await rtsu_client.auth(TEST_DATA.get("login"), TEST_DATA.get("password"))
+    resp = await rtsu_client.auth(settings.rtsu_api_login, settings.rtsu_api_password)
 
     assert resp.token is not None
+
+    with open("some.txt", 'w') as f:
+        f.write(resp.token)
 
 
 @pytest.mark.asyncio
@@ -43,7 +43,7 @@ async def test_rtsu_profile_fetching(rtsu_client: RTSUApi):
     :return:
     """
 
-    await rtsu_client.auth(TEST_DATA.get("login"), TEST_DATA.get("password"))
+    await rtsu_client.auth(settings.rtsu_api_login, settings.rtsu_api_password)
 
     profile = await rtsu_client.get_profile()
 
@@ -59,7 +59,7 @@ async def test_rtsu_academic_years_fetching(rtsu_client: RTSUApi):
     :return:
     """
 
-    await rtsu_client.auth(TEST_DATA.get("login"), TEST_DATA.get("password"))
+    await rtsu_client.auth(settings.rtsu_api_login, settings.rtsu_api_password)
 
     years = await rtsu_client.get_academic_years()
 
@@ -75,7 +75,7 @@ async def test_rtsu_academic_year_subjects_fetching(rtsu_client: RTSUApi):
     :return:
     """
 
-    await rtsu_client.auth(TEST_DATA.get("login"), TEST_DATA.get("password"))
+    await rtsu_client.auth(settings.rtsu_api_login, settings.rtsu_api_password)
 
     ac_years = await rtsu_client.get_academic_years()
     year = ac_years[0].id
