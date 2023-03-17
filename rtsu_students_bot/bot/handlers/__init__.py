@@ -1,6 +1,8 @@
 from aiogram import Dispatcher
 
-from . import commands, callback_query
+from . import (
+    commands, callback_query, startup
+)
 
 
 def setup(dp: Dispatcher):
