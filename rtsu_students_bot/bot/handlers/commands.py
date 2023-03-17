@@ -1,6 +1,7 @@
 from aiogram import types, Dispatcher
 
 from rtsu_students_bot.bot.templates import welcome
+from rtsu_students_bot.bot.keyboards import inline
 
 
 async def start(message: types.Message):
@@ -12,7 +13,8 @@ async def start(message: types.Message):
     await message.reply(
         welcome.substitute(
             user=message.from_user.full_name
-        )
+        ),
+        reply_markup=inline.start_keyboard_factory()
     )
 
 
