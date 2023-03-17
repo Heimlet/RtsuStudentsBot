@@ -6,6 +6,15 @@ from .bot import get_app
 typer_app = Typer()
 
 
+async def startup_handler():
+    """
+
+    :return:
+    """
+
+    pass
+
+
 @typer_app.command()
 def start(
         skip_updates: bool = Argument(default=False, help="Skip telegram updates on start?"),
@@ -25,5 +34,6 @@ def start(
     else:
         executor.start_polling(
             dp,
-            skip_updates=skip_updates
+            skip_updates=skip_updates,
+            on_startup=startup_handler
         )
