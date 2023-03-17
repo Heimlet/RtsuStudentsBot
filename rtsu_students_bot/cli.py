@@ -1,18 +1,9 @@
 from aiogram import executor
 from typer import Typer, Argument
 
-from .bot import get_app
+from .bot import get_app, handlers
 
 typer_app = Typer()
-
-
-async def startup_handler():
-    """
-
-    :return:
-    """
-
-    pass
 
 
 @typer_app.command()
@@ -35,5 +26,5 @@ def start(
         executor.start_polling(
             dp,
             skip_updates=skip_updates,
-            on_startup=startup_handler
+            on_startup=handlers.startup.startup_handler
         )
