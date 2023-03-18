@@ -25,6 +25,14 @@ class RTSUApi:
         self._api_token = token
         self._http_client = ClientSession()
 
+    def set_token(self, token: str):
+        """
+        Setups token
+        :param token: A token
+        :return:
+        """
+        self._api_token = token
+
     async def _make_request(
             self,
             method: str,
