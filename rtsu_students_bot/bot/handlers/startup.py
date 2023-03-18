@@ -3,6 +3,8 @@ import logging
 from aiogram import types, Dispatcher, Bot
 
 from rtsu_students_bot.config import settings
+from rtsu_students_bot.database import engine
+from rtsu_students_bot.models import Base
 
 BOT_COMMANDS = [
     types.BotCommand(
@@ -25,6 +27,16 @@ def configure_logging():
     logging.basicConfig(level=level, format=settings.logging.format)
 
 
+async def setup_db():
+    """
+    Initializes db (creates tables, etc...)
+    :return:
+    """
+    logging.info("Initializing database...")
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+
+
 async def setup_commands(bot: Bot):
     """
     Configures bot-commands
@@ -45,6 +57,7 @@ async def startup_handler(dp: Dispatcher):
 
     configure_logging()
 
+    await setup_db()
     await setup_commands(dp.bot)
 
     logging.info("Starting bot.")
