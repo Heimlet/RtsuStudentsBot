@@ -1,7 +1,8 @@
 from aiogram import Dispatcher
 
 from . import (
-    commands, callback_query, startup
+    commands, callback_query, startup,
+    text,
 )
 
 
@@ -13,3 +14,5 @@ def setup(dp: Dispatcher):
     """
 
     commands.setup(dp)
+    callback_query.setup(dp)
+    text.setup(dp)
