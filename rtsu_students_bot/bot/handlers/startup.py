@@ -11,6 +11,10 @@ BOT_COMMANDS = [
         "start",
         "Запуск бота"
     ),
+    types.BotCommand(
+        "auth",
+        "Авторизация в системе"
+    )
 ]
 
 
