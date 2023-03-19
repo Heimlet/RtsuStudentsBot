@@ -44,7 +44,7 @@ class RTSUApi:
     ) -> Union[P, List[P]]:
         """
         Makes call to RTSU API
-        :param url_part: Part of RTSU-API url, example - `/auth`
+        :param url_part: Part of RTSU-API url, example - /auth
         :param json: A json for sending
         :param params: URI parameters for sending
         :return: Response object
@@ -60,7 +60,7 @@ class RTSUApi:
 
         if auth_required:
             if not self._api_token:
-                raise NotAuthorizedError("Not authorized, use `.auth` method.")
+                raise NotAuthorizedError("Not authorized, use `.auth.html` method.")
 
             headers['token'] = self._api_token
 
@@ -106,8 +106,10 @@ class RTSUApi:
                     "password": password,
                 }
             )
-        except ServerError:
-            raise AuthError("Auth error, check login and password.")
+        except ServerError as e:
+            raise AuthError(
+                f"Auth error, check login and password, message from server: {e.message}"
+            )
 
         self._api_token = response.token
 
