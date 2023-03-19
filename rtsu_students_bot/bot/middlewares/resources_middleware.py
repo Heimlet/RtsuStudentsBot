@@ -108,9 +108,10 @@ class ResourcesMiddleware(BaseMiddleware):
 
         return data
 
-    async def on_post_process_callback_query(self, query: types.CallbackQuery, data: dict):
+    async def on_post_process_callback_query(self, query: types.CallbackQuery, data_from_handler: list, data: dict):
         """
         Method for post-processing callback query
+        :param data_from_handler: Data from handler
         :param query: A callback query
         :param data: A data from another middleware
         :return:
