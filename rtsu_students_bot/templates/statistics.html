@@ -1,0 +1,4 @@
+<u><b>📊 Общая статистика.</b></u>
+{% for subject in subjects %}
+<b><u>{{ loop.index }}.</u> <em>{{ subject.name.ru }} ({{ subject.total_point }}/100)</em></b>
+{% endfor %}
