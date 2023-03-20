@@ -154,4 +154,18 @@ poetry run bot --use-webhooks
 poetry run bot --skip-updates
 ```
 
+## Used software
+
+<ul>
+  <li>Poetry</li>
+  <li>Aiogram</li>
+  <li>Aiohttp</li>
+  <li>Cashews</li>
+  <li>Pydantic</li>
+  <li>SQLAlchemy</li>
+  <li>Jinja2</li>
+  <li>Typer</li>
+  <li>Pytest</li>
+</ul>
+
 Ilyas Qalandarzoda (C), 2023.
