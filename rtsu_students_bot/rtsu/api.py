@@ -1,5 +1,5 @@
 from aiohttp import ClientSession, ContentTypeError
-
+from cashews import cache
 from typing import Optional, Union, Dict, TypeVar, Type, List, Self
 
 from pydantic import BaseModel, parse_obj_as
@@ -60,7 +60,7 @@ class RTSUApi:
 
         if auth_required:
             if not self._api_token:
-                raise NotAuthorizedError("Not authorized, use `.auth.html` method.")
+                raise NotAuthorizedError("Not authorized, use `.auth` method.")
 
             headers['token'] = self._api_token
 
@@ -115,6 +115,7 @@ class RTSUApi:
 
         return response
 
+    @cache.soft(ttl="24h", soft_ttl="1m")
     async def get_profile(self) -> Profile:
         """
         Returns profile of RTSU student
@@ -141,6 +142,7 @@ class RTSUApi:
             auth_required=True,
         )
 
+    @cache.soft(ttl="24h", soft_ttl="1m")
     async def get_academic_year_subjects(self, year_id: int) -> List[Subject]:
         """
         Returns `List` with `Subjects` of some year
@@ -154,11 +156,29 @@ class RTSUApi:
             auth_required=True,
         )
 
+    async def get_current_year_id(self) -> int:
+        """
+        Returns identifier of current year
+        :return:
+        """
+
+        years = await self.get_academic_years()
+
+        return years[0].id
+
     async def __aenter__(self) -> Self:
         return self
 
     async def __aexit__(self, exc_type, exc_val, exc_tb):
         await self.close_session()
+
+    def __str__(self) -> str:
+        """
+        Stringifies `RTSUApi` objects
+        :return:
+        """
+
+        return f"{self.__class__.__name__}<token={self._api_token}>"
 
     async def close_session(self):
         """Frees inner resources"""
