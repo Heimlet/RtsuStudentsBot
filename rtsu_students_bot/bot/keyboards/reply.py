@@ -18,7 +18,6 @@ def main_menu_factory() -> ReplyKeyboardMarkup:
     markup.row(
         KeyboardButton("🆘 Инструкция"),
         KeyboardButton("ℹ️ О боте"),
-        KeyboardButton("🍩 Помощь проекту")
     )
 
     markup.row(
