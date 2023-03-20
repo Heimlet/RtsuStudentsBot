@@ -1,4 +1,7 @@
+from typing import List
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+
+from rtsu_students_bot.rtsu import schemas
 
 from . import callbacks
 
@@ -53,5 +56,25 @@ def confirmation_keyboard_factory() -> InlineKeyboardMarkup:
     markup.add(
         InlineKeyboardButton("Нет", callback_data=callbacks.CONFIRMATION_CALLBACK.new(0))
     )
+
+    return markup
+
+
+def subjects_keyboard_factory(subjects: List[schemas.Subject]) -> InlineKeyboardMarkup:
+    """
+    Builds & returns keyboards with list of subjects
+    :param subjects: List of subjects
+    :return: Prepared keyboard with subjects
+    """
+
+    markup = InlineKeyboardMarkup()
+
+    for subj in subjects:
+        markup.add(
+            InlineKeyboardButton(
+                text=subj.name.ru,
+                callback_data=callbacks.SUBJECT_CALLBACK.new(subj.id)
+            )
+        )
 
     return markup
