@@ -10,7 +10,7 @@ typer_app = Typer()
 @typer_app.command()
 def start(
         skip_updates: bool = Argument(default=False, help="Skip telegram updates on start?"),
-        use_webhook: str = Argument(default=None, help="Use webhook for receiving updates?")
+        use_webhook: bool = Argument(default=False, help="Use webhook for receiving updates?")
 ):
     """
     Starts bot
@@ -41,7 +41,7 @@ def start(
             host=settings.webhooks.webapp_host,
             port=settings.webhooks.webapp_port,
             webhook_path=settings.webhooks.path,
-            check_ip=True
+            check_ip=False
         )
     else:
         executor.start_polling(
