@@ -1,5 +1,6 @@
 from aiogram import types, Dispatcher
 
+from rtsu_students_bot.bot.filters import AuthorizationFilter
 from rtsu_students_bot.models import User
 from rtsu_students_bot.bot.keyboards import inline, reply
 from rtsu_students_bot.template_engine import render_template
@@ -46,4 +47,4 @@ def setup(dp: Dispatcher):
     :return:
     """
     dp.register_message_handler(start, commands=["start"])
-    dp.register_message_handler(auth, commands=["auth"])
+    dp.register_message_handler(auth, AuthorizationFilter(authorized=True), commands=["auth"])
