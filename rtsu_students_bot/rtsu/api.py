@@ -1,4 +1,4 @@
-from aiohttp import ClientSession, ContentTypeError
+from aiohttp import ClientSession, ContentTypeError, client_exceptions
 from cashews import cache
 from typing import Optional, Union, Dict, TypeVar, Type, List, Self
 
@@ -64,14 +64,17 @@ class RTSUApi:
 
             headers['token'] = self._api_token
 
-        response = await self._http_client.request(
-            method,
-            f"{RTSU_API_BASE_URL}/{url_part}",
-            json=json,
-            params=params,
-            headers=headers,
-            ssl=False,
-        )
+        try:
+            response = await self._http_client.request(
+                method,
+                f"{RTSU_API_BASE_URL}/{url_part}",
+                json=json,
+                params=params,
+                headers=headers,
+                ssl=False,
+            )
+        except (client_exceptions.ClientConnectionError, client_exceptions.ClientConnectorError) as e:
+            raise ServerError(f"Connection error, details: {e}")
 
         if response.status != 200:
             details = await response.text()
