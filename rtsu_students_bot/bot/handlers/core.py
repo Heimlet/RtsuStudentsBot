@@ -69,6 +69,7 @@ async def show_profile(
     await message.bot.send_message(
         message.from_user.id,
         text,
+        reply_markup=inline.message_hiding_keyboard()
     )
 
 
@@ -88,7 +89,8 @@ async def show_statistics(
 
     await message.bot.send_message(
         message.chat.id,
-        text=render_template("statistics.html", subjects=subjects)
+        text=render_template("statistics.html", subjects=subjects),
+        reply_markup=inline.message_hiding_keyboard()
     )
 
 
@@ -163,4 +165,63 @@ async def show_subjects(
         message.chat.id,
         text="📕 Дисциплины",
         reply_markup=inline.subjects_keyboard_factory(subjects)
+    )
+
+
+async def logout_user(
+        message: types.Message,
+        user_in_db: User,
+        db_session: AsyncSession
+):
+    """
+    Sets user's token to `NULL`
+    :param db_session: `AsyncSession` object
+    :param message: A message
+    :param user_in_db: A user in db
+    :return:
+    """
+
+    await user.update_user_token(
+        db_session,
+        user_in_db.telegram_id,
+        token=None
+    )
+
+    await message.bot.send_message(
+        message.from_user.id,
+        text=render_template("logout.html", user=user_in_db),
+        reply_markup=inline.auth_keyboard_factory()
+    )
+
+
+async def show_help(
+        message: types.Message
+):
+    """
+    Shows help-menu
+    :param message: A message
+    :return:
+    """
+
+    await message.bot.send_message(
+        message.from_user.id,
+        text=render_template("help.html"),
+        reply_markup=inline.message_hiding_keyboard()
+    )
+
+
+async def show_about(
+        message: types.Message
+):
+    """
+    Shows about-menu
+    :param message: A message
+    :return:
+    """
+
+    await message.bot.send_message(
+        message.from_user.id,
+        text=render_template("about.html"),
+        disable_web_page_preview=True,
+        reply_markup=inline.message_hiding_keyboard()
     )
