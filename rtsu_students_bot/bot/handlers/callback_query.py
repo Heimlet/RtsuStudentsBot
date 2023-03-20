@@ -2,6 +2,7 @@ from aiogram import types, Dispatcher
 from aiogram.dispatcher import FSMContext
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from rtsu_students_bot.bot.filters import AuthorizationFilter
 from rtsu_students_bot.rtsu import RTSUApi
 from rtsu_students_bot.template_engine import render_template
 from rtsu_students_bot.models import User
@@ -86,13 +87,56 @@ async def credentials_confirmation_callback_processor(
         await AuthState.first()
 
 
+async def show_subject_processor(
+        query: types.CallbackQuery,
+        rtsu: RTSUApi,
+        callback_data: dict,
+):
+    """
+    Handles `callbacks.SUBJECT_CALLBACK`
+    :param callback_data: A callback-data
+    :param query: A query
+    :param rtsu: Initialized RTSU API client
+    """
+
+    await query.answer()
+
+    needed_subject_id = int(callback_data.get("id"))
+
+    year = await rtsu.get_current_year_id()
+
+    subjects = await rtsu.get_academic_year_subjects(year)
+
+    needed_subject = list(filter(lambda x: x.id == needed_subject_id, subjects))
+
+    if not needed_subject:
+        await query.bot.send_message(
+            query.from_user.id,
+            "Дисциплина не найдена."
+        )
+        return
+
+    await query.bot.send_message(
+        query.from_user.id,
+        text=render_template(
+            "subject.html",
+            subject=needed_subject[0]
+        )
+    )
+
+
 def setup(dp: Dispatcher):
     """
     Registers callback-query handlers
     :param dp: A `Dispatcher` instance
     """
-    dp.register_callback_query_handler(auth_callback_processor, callbacks.AUTH_CALLBACK.filter())
+    dp.register_callback_query_handler(
+        auth_callback_processor, callbacks.AUTH_CALLBACK.filter(), AuthorizationFilter(authorized=True)
+    )
     dp.register_callback_query_handler(cancel_callback_processor, callbacks.CANCELLATION_CALLBACK.filter())
     dp.register_callback_query_handler(
         credentials_confirmation_callback_processor, callbacks.CONFIRMATION_CALLBACK.filter(), state=AuthState.confirm
+    )
+    dp.register_callback_query_handler(
+        show_subject_processor, callbacks.SUBJECT_CALLBACK.filter(), AuthorizationFilter(authorized=True)
     )
