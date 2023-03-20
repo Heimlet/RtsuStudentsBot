@@ -168,4 +168,13 @@ poetry run bot --skip-updates
   <li>Pytest</li>
 </ul>
 
+### Contacts
+
+<ul>
+  <li><a href='https://t.me/awaitable'>Telegram</a></li>
+  <li>ilyas.kalandar@yandex.ru</li>
+  <li><a href='https://t.me/rtsu_students_bot'>Bot's link</a></li>
+</ul>
+
+
 Ilyas Qalandarzoda (C), 2023.
