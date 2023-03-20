@@ -2,7 +2,7 @@ from aiogram import Dispatcher
 
 from . import (
     commands, callback_query, startup,
-    text,
+    text, errors
 )
 
 
@@ -16,3 +16,4 @@ def setup(dp: Dispatcher):
     commands.setup(dp)
     callback_query.setup(dp)
     text.setup(dp)
+    errors.setup(dp)
