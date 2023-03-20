@@ -80,14 +80,14 @@ class ResourcesMiddleware(BaseMiddleware):
             api_client: RTSUApi = data["rtsu"]
             await api_client.close_session()
 
-    async def on_pre_process_message(self, update: types.Update, data: dict):
+    async def on_pre_process_message(self, update: types.Message, data: dict):
         """
         For pre-processing `types.Update`
         :param data: Data from other middlewares
         :param update: A telegram-update
         :return:
         """
-
+        await update.bot.send_chat_action(update.from_user.id, "typing")
         resources = await self._provide_resources()
 
         data.update(resources)
