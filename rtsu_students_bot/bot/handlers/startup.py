@@ -16,7 +16,31 @@ BOT_COMMANDS = [
     types.BotCommand(
         "auth",
         "Авторизация в системе"
-    )
+    ),
+    types.BotCommand(
+        "profile",
+        "Профиль РТСУ"
+    ),
+    types.BotCommand(
+        "stat",
+        "Общая статистика"
+    ),
+    types.BotCommand(
+        "subjects",
+        "Дисциплины"
+    ),
+    types.BotCommand(
+        "help",
+        "Помощь"
+    ),
+    types.BotCommand(
+        "about",
+        "О боте"
+    ),
+    types.BotCommand(
+        "logout",
+        "Выход из системы"
+    ),
 ]
 
 
