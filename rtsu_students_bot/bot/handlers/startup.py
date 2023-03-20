@@ -1,5 +1,7 @@
 import logging
 
+import cashews
+
 from aiogram import types, Dispatcher, Bot
 
 from rtsu_students_bot.config import settings
@@ -29,6 +31,14 @@ def configure_logging():
         level = logging.DEBUG
 
     logging.basicConfig(level=level, format=settings.logging.format)
+
+
+def setup_cache():
+    """
+    Configures cache
+    """
+    logging.info("Setting up cache...")
+    cashews.setup("mem://")
 
 
 async def setup_db():
@@ -61,6 +71,7 @@ async def startup_handler(dp: Dispatcher):
 
     configure_logging()
 
+    setup_cache()
     await setup_db()
     await setup_commands(dp.bot)
 
