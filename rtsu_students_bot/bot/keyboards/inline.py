@@ -78,3 +78,19 @@ def subjects_keyboard_factory(subjects: List[schemas.Subject]) -> InlineKeyboard
         )
 
     return markup
+
+
+def message_hiding_keyboard() -> InlineKeyboardMarkup:
+    """
+    Builds keyboard for message-deleting
+    :return:
+    """
+
+    markup = InlineKeyboardMarkup()
+    markup.add(
+        InlineKeyboardButton(
+            "🔽 Скрыть", callback_data=callbacks.DELETE_MSG_CALLBACK.new()
+        )
+    )
+
+    return markup
