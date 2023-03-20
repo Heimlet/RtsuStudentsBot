@@ -1,4 +1,5 @@
 import logging
+from typing import Optional
 
 import cashews
 
@@ -87,16 +88,33 @@ async def setup_commands(bot: Bot):
     )
 
 
-async def startup_handler(dp: Dispatcher):
+async def configure_webhooks(url: str, dp: Dispatcher):
     """
-    Startup handler
-    :param dp: A `Dispatcher` instance
+    Configures webhooks
+    :param url: Url
+    :param dp: Dispatcher
+    :return:
     """
+    logging.info(f"Settings webhooks [{url}]")
+    await dp.bot.set_webhook(url)
 
-    configure_logging()
 
-    setup_cache()
-    await setup_db()
-    await setup_commands(dp.bot)
+def startup_handler_factory(webhook_url: Optional[str] = None) -> callable:
+    async def inner_func(dp: Dispatcher):
+        """
+        Startup handler
+        :param dp: A `Dispatcher` instance
+        """
 
-    logging.info("Starting bot.")
+        configure_logging()
+
+        if webhook_url:
+            await configure_webhooks(webhook_url, dp)
+
+        setup_cache()
+        await setup_db()
+        await setup_commands(dp.bot)
+
+        logging.info("Starting bot.")
+
+    return inner_func
