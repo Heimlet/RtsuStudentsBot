@@ -6,7 +6,7 @@ from rtsu_students_bot.bot.filters import AuthorizationFilter
 from rtsu_students_bot.rtsu import RTSUApi
 from rtsu_students_bot.template_engine import render_template
 from rtsu_students_bot.models import User
-from rtsu_students_bot.bot.keyboards import callbacks
+from rtsu_students_bot.bot.keyboards import callbacks, inline
 from rtsu_students_bot.bot.states import AuthState
 
 from .core import start_auth, authorize_user
@@ -82,7 +82,8 @@ async def credentials_confirmation_callback_processor(
     else:
         await query.bot.send_message(
             query.from_user.id,
-            text=render_template("auth.html", user=user)
+            text=render_template("auth.html", user=user),
+            reply_markup=inline.cancellation_keyboard_factory()
         )
         await AuthState.first()
 
@@ -125,18 +126,31 @@ async def show_subject_processor(
     )
 
 
+async def delete_message_callback_processor(query: types.CallbackQuery):
+    """
+    Processes deletion-callback
+    :param query: A callback-query
+    :return:
+    """
+    await query.answer()
+    await query.message.delete()
+
+
 def setup(dp: Dispatcher):
     """
     Registers callback-query handlers
     :param dp: A `Dispatcher` instance
     """
     dp.register_callback_query_handler(
-        auth_callback_processor, callbacks.AUTH_CALLBACK.filter(), AuthorizationFilter(authorized=True)
+        auth_callback_processor, callbacks.AUTH_CALLBACK.filter(), AuthorizationFilter(False)
     )
     dp.register_callback_query_handler(cancel_callback_processor, callbacks.CANCELLATION_CALLBACK.filter())
     dp.register_callback_query_handler(
         credentials_confirmation_callback_processor, callbacks.CONFIRMATION_CALLBACK.filter(), state=AuthState.confirm
     )
     dp.register_callback_query_handler(
-        show_subject_processor, callbacks.SUBJECT_CALLBACK.filter(), AuthorizationFilter(authorized=True)
+        show_subject_processor, callbacks.SUBJECT_CALLBACK.filter(), AuthorizationFilter(True)
+    )
+    dp.register_callback_query_handler(
+        delete_message_callback_processor, callbacks.DELETE_MSG_CALLBACK.filter()
     )
