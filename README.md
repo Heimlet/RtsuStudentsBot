@@ -82,9 +82,9 @@ Paste this to file
 poetry run pytest
 ```
 
-### Starting bot
+### 🚀 Starting bot
 
-#### Configuration
+#### ⚙️ Configuration
 
 Create settings file
 ```bash
