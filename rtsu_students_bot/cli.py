@@ -1,5 +1,5 @@
 from aiogram import executor
-from typer import Typer, Argument
+from typer import Typer, Option
 
 from .config import settings
 from .bot import get_app, handlers
@@ -9,8 +9,8 @@ typer_app = Typer()
 
 @typer_app.command()
 def start(
-        skip_updates: bool = Argument(default=False, help="Skip telegram updates on start?"),
-        use_webhook: str = Argument(default=None, help="Use webhook for receiving updates?")
+        skip_updates: bool = Option(default=False, help="Skip telegram updates on start?"),
+        use_webhook: bool = Option(default=False, help="Use webhook for receiving updates?")
 ):
     """
     Starts bot
