@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseSettings
 
 from .constants import DEFAULT_ENCODING, SETTINGS_FILE
@@ -18,11 +20,19 @@ class Logging(BaseSettings):
     debug: bool
 
 
+class Webhooks(BaseSettings):
+    host: str
+    path: str
+    webapp_host: str
+    webapp_port: int
+
+
 class Settings(BaseSettings):
     """Class for settings"""
     bot: BotSettings
     logging: Logging
     db: DatabaseSettings
+    webhooks: Optional[Webhooks] = None
 
 
 settings = Settings.parse_file(
