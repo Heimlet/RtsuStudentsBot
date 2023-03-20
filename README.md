@@ -13,19 +13,19 @@ Bot can provide you information about
 
 ### Screenshots
 
-##### Statistics
+### Statistics
 
 <img src='.github/stat.png'>
 
-##### Profile
+### Profile
 
 <img src='.github/profile.png'>
 
-##### Subjects
+### Subjects
 
 <img src='.github/subjects_list.png'>
 
-##### Statistics on concrete subject
+### Statistics on concrete subject
 
 <img src='.github/concrete_subject.png'>
 
