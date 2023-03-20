@@ -5,6 +5,7 @@
 from aiogram import types, Dispatcher
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from rtsu_students_bot.bot.filters import AuthorizationFilter
 from rtsu_students_bot.rtsu import RTSUApi
@@ -107,6 +108,52 @@ async def show_subjects_handler(
     await core.show_subjects(message, rtsu)
 
 
+async def logout_handler(
+        message: types.Message,
+        user: User,
+        db_session: AsyncSession,
+):
+    """
+    Handles 'logout-request'
+    :param db_session: `AsyncSession` object
+    :param message: A message
+    :param user: A user in db
+    """
+
+    await core.logout_user(message, user, db_session)
+
+
+async def auth_handler(message: types.Message, user: User):
+    """
+    Handles 'auth-request'
+    :param message: A message
+    :param user: A user in db
+    :return:
+    """
+
+    await core.start_auth(message, user)
+
+
+async def help_handler(message: types.Message):
+    """
+    Handles 'help-request'
+    :param message: A message
+    :return:
+    """
+
+    await core.show_help(message)
+
+
+async def about_handler(message: types.Message):
+    """
+    Handles 'about-request'
+    :param message: A message
+    :return:
+    """
+
+    await core.show_about(message)
+
+
 def setup(dp: Dispatcher):
     """
     Setups text-handlers
@@ -126,4 +173,17 @@ def setup(dp: Dispatcher):
     )
     dp.register_message_handler(
         show_subjects_handler, Text(equals="📕 Дисциплины"), AuthorizationFilter(authorized=True)
+    )
+    dp.register_message_handler(
+        logout_handler, Text(equals="◀️ Выход из системы"), AuthorizationFilter(authorized=True)
+    )
+    dp.register_message_handler(
+        auth_handler, Text(equals="🔑 Авторизация"), AuthorizationFilter(authorized=False)
+    )
+    dp.register_message_handler(
+        help_handler, Text(equals="🆘 Инструкция"),
+    )
+
+    dp.register_message_handler(
+        about_handler, Text(equals="ℹ️ О боте"),
     )
