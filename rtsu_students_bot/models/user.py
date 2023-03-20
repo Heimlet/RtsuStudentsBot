@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, Column, String, Boolean
+from sqlalchemy import Integer, Column, String, Boolean, BigInteger
 
 from .base import Base
 
@@ -6,7 +6,7 @@ from .base import Base
 class User(Base):
     __tablename__ = "users"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(BigInteger, primary_key=True, index=True)
     full_name = Column(String(length=255), nullable=True)
     token = Column(String(length=600), nullable=True)
     is_authorized = Column(Boolean, default=False)
