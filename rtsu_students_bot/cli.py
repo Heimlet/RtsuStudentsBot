@@ -37,7 +37,7 @@ def start(
         executor.start_webhook(
             dispatcher=dp,
             on_startup=startup_handler,
-            skip_updates=True,
+            skip_updates=skip_updates,
             host=settings.webhooks.webapp_host,
             port=settings.webhooks.webapp_port,
             webhook_path=settings.webhooks.path,
