@@ -7,4 +7,4 @@ engine = create_async_engine(
     settings.db.url,
 )
 
-SessionLocal = sessionmaker(autoflush=True, bind=engine, class_=AsyncSession)
+SessionLocal = sessionmaker(bind=engine, class_=AsyncSession)
