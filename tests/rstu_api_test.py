@@ -31,9 +31,6 @@ async def test_rtsu_login(rtsu_client: RTSUApi):
 
     assert resp.token is not None
 
-    with open("some.txt", 'w') as f:
-        f.write(resp.token)
-
 
 @pytest.mark.asyncio
 async def test_rtsu_profile_fetching(rtsu_client: RTSUApi):

@@ -1,9 +1,0 @@
-{
-  "bot": {
-    "token": "Your token, obtain it from @BotFather"
-  },
-  "server": {
-    "host": "Your host",
-    "port": 80
-  }
-}

@@ -72,8 +72,14 @@ class RTSUApi:
                 params=params,
                 headers=headers,
                 ssl=False,
+                timeout=5
+
             )
-        except (client_exceptions.ClientConnectionError, client_exceptions.ClientConnectorError) as e:
+        except (
+                client_exceptions.ClientConnectionError,
+                client_exceptions.ClientConnectorError,
+                client_exceptions.ServerTimeoutError
+        ) as e:
             raise ServerError(f"Connection error, details: {e}")
 
         if response.status != 200:

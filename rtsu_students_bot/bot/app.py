@@ -21,6 +21,9 @@ def get_app() -> Dispatcher:
     # Setup handlers
 
     handlers.setup(dp)
+
+    # Setup middlewares
+
     middlewares.setup(dp)
 
     return dp
