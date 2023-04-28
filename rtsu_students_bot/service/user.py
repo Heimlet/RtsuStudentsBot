@@ -32,7 +32,7 @@ async def get_users(
     )
 
     # noinspection PyTypeChecker
-    return results.fetchall()
+    return results.scalars().fetchall()
 
 
 async def get_user_by_tg_id(
