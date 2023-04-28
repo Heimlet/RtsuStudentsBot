@@ -1,11 +1,38 @@
-from typing import Optional
+from typing import Optional, List, Tuple, Any, Sequence
 
-from sqlalchemy import select, update, delete
+from sqlalchemy import select, update, delete, Row
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from rtsu_students_bot.models import User
 
 from .exceptions import UserNotFound, UserAlreadyExists
+
+
+async def get_users(
+        session: AsyncSession,
+        offset: int = 10,
+        limit: int = 10
+) -> List[User]:
+    """
+    Fetches users
+    :param session:
+    :param offset:
+    :param limit:
+    :return:
+    """
+
+    results = await session.execute(
+        select(
+            User
+        ).offset(
+            offset
+        ).limit(
+            limit
+        )
+    )
+
+    # noinspection PyTypeChecker
+    return results.fetchall()
 
 
 async def get_user_by_tg_id(
