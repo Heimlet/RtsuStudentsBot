@@ -26,4 +26,4 @@ class Profile(Base):
     entrance_year: str = Field(alias='YearUniversityEntrance')
     speciality_code: str = Field(alias='CodeSpecialty')
     group: str = Field(alias="Group")
-    speciality: FullName = Field(alias='CodeSpecialty')
+    speciality: FullName = Field(alias='Specialty')
