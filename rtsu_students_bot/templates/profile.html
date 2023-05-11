@@ -6,9 +6,12 @@
 
 <b>🏢 Факультет: <em>{{ profile.faculty.ru }} </em></b>
 
+<b>⚡️️️️️️ Специальность: <em>{{ profile.speciality.ru }} | {{ profile.speciality_code }}</em></b>
+️
 <b>ℹ️ Курс: <code>{{ profile.course }}</code></b>
 
-<b>⏳ Период обучения: {{ profile.training_period }}{% if profile.training_period < 5 %} года {% else %} лет {% endif %}</b>
+<b>⏳ Период обучения: {{ profile.training_period }}{% if profile.training_period < 5 %} года {% else %} лет {% endif
+    %}</b>
 
 <b>🕔 Год поступления: {{ profile.entrance_year }}</b>
 
