@@ -24,3 +24,6 @@ class Profile(Base):
     training_period: int = Field(alias='TrainingPeriod')
     level: str = Field(alias="TrainingLevel")
     entrance_year: str = Field(alias='YearUniversityEntrance')
+    speciality_code: str = Field(alias='CodeSpecialty')
+    group: str = Field(alias="Group")
+    speciality: FullName = Field(alias='CodeSpecialty')
