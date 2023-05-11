@@ -144,7 +144,7 @@ def setup(dp: Dispatcher):
     dp.register_callback_query_handler(
         auth_callback_processor, callbacks.AUTH_CALLBACK.filter(), AuthorizationFilter(False)
     )
-    dp.register_callback_query_handler(cancel_callback_processor, callbacks.CANCELLATION_CALLBACK.filter())
+    dp.register_callback_query_handler(cancel_callback_processor, callbacks.CANCELLATION_CALLBACK.filter(), state='*')
     dp.register_callback_query_handler(
         credentials_confirmation_callback_processor, callbacks.CONFIRMATION_CALLBACK.filter(), state=AuthState.confirm
     )
