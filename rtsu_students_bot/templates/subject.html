@@ -1,7 +1,7 @@
 <b>📖 Дисциплина — <em><u>{{ subject.name.ru }}</u></em></b>
 <b>👨‍🏫 Преподаватель — <em>{{ subject.teacher_name.ru }}</em></b>
 
-<b><em>Общая оценка: {{subject.total_point}}</em></b>
+<b><em>Общая оценка: {{subject.total_point}} / ({{ subject.mark }})</em></b>
 <b><em>Административная оценка: {{ subject.admin_point }}</em></b>
 <b><em>Экзамен: {{ subject.exam_point }}</em></b>
 
@@ -9,11 +9,10 @@
 {% for week in subject.first_rating_weeks %}
 <b>Неделя {{week.number}}</b> — ({{week.point}}/{{week.max_point}}) {% if week.is_current_week %} <em>[Текущая неделя]</em> {% endif %}
 {% endfor %}
+<b>🚩 Контрольная: </b> <em>{{ subject.first_rating_point }}</em>
 
 2️⃣. <u>Второй рубеж</u>
 {% for week in subject.second_rating_weeks %}
 <b>Неделя {{week.number}}</b> — ({{week.point}}/{{week.max_point}}) {% if week.is_current_week %} <em>[Текущая неделя]</em> {% endif %}
 {% endfor %}
-{% if not subject.second_rating_weeks %}
-<em>Пока пусто.</em>
-{% endif %}
+<b>🚩 Контрольная: </b> <em>{{ subject.second_rating_point }}</em>
