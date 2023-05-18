@@ -26,6 +26,8 @@ class Subject(Base):
     teacher_name: TeacherName = Field(alias='TeacherName')
     first_rating_weeks: List[RatingWeek] = Field(alias='FirstRatingWeeks')
     second_rating_weeks: List[RatingWeek] = Field(alias='SecondRatingWeeks')
+    first_rating_point: int = Field(alias="FirstRatingPoint")
+    second_rating_point: int = Field(alias="SecondRatingPoint")
     exam_point: float = Field(alias='ExamPoint')
     total_point: float = Field(alias='TotalPoint')
     admin_point: float = Field(alias='AdminPoint')
