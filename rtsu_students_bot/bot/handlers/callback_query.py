@@ -122,7 +122,8 @@ async def show_subject_processor(
         text=render_template(
             "subject.html",
             subject=needed_subject[0]
-        )
+        ),
+        reply_markup=inline.message_hiding_keyboard()
     )
 
 
